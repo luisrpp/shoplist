@@ -1,0 +1,9 @@
+Django==1.4.3
+South==0.7.6
+git-remote-helpers==0.1.0
+ipython==0.13.1
+numpy==1.6.2
+virtualenv==1.7.2
+virtualenv-clone==0.2.4
+virtualenvwrapper==3.5
+wsgiref==0.1.2
