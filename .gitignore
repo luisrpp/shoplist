@@ -9,3 +9,4 @@ Scripts
 *.pyc
 database.db
 .DS_Store
+set_locale.sh
