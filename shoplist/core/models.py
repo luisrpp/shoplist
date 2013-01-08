@@ -18,7 +18,7 @@ class Category(models.Model):
 
 class ShopList(models.Model):
     name = models.CharField(max_length=200, verbose_name=_(u'Lista'))
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, verbose_name=_(u'Categoria'))
     date = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
 
     class Meta:
@@ -43,10 +43,14 @@ class Product(models.Model):
 
 
 class ListItem(models.Model):
-    shop_list = models.ForeignKey(ShopList)
-    product = models.ForeignKey(Product)
+    shop_list = models.ForeignKey(ShopList, verbose_name=_(u'Lista'))
+    product = models.ForeignKey(Product, verbose_name=_(u'Produto'))
     quantity = models.IntegerField(verbose_name=_(u'Quantidade'))
-    price = models.DecimalField(verbose_name=_(u'Preço'), max_digits=10, decimal_places=2)
+    price = models.DecimalField(verbose_name=_(u'Preço'), max_digits=10, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _(u'Item da Lista')
+        verbose_name_plural = _(u'Itens da Lista')
 
     def __unicode__(self):
         return self.product.name   
