@@ -3,22 +3,8 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=200, verbose_name=_(u'Categoria'))
-
-    class Meta:
-        ordering = ['name']
-        verbose_name = _(u'Categoria')
-        verbose_name_plural = _(u'Categorias')
-
-
-    def __unicode__(self):
-        return self.name
-
-
 class ShopList(models.Model):
     name = models.CharField(max_length=200, verbose_name=_(u'Lista'))
-    category = models.ForeignKey(Category, verbose_name=_(u'Categoria'))
     date = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
 
     class Meta:
