@@ -8,7 +8,7 @@ class ShopList(models.Model):
     created_at = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['-created_at']
         verbose_name = _(u'Lista')
         verbose_name_plural = _(u'Listas')
 
