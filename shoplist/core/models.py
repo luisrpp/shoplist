@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 
 class ShopList(models.Model):
     name = models.CharField(max_length=200, verbose_name=_(u'Lista'))
-    date = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
+    created_at = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
 
     class Meta:
         ordering = ['name']
