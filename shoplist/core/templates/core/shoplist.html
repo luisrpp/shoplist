@@ -3,42 +3,43 @@
 {% block content %}
 
     <form>
-        <fieldset>
         <label>Lista de Compras:</label>
         <input type="text" placeholder="Digite o nome da lista…">
         <span class="help-block">Exemplo: Lista de compras 01</span>
     </form>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Produto</th>
-          <th>Quantidade</th>
-          <th>Preço</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            <td>
-                <input class="input-xlarge" type="text" placeholder="Nome do produto…">
-            </td>
-            <td>
-                <input class="input-mini" type="text">
-            </td>
-            <td>
-                <div class="input-prepend input-append">
-                <span class="add-on">R$</span>
-                <input class="input-mini" id="appendedPrependedInput" type="text">
-                </div>
-            </td>
-            <td>
-                <i class="icon-ok"></i>
-                <i class="icon-pencil"></i>
-                <i class="icon-remove"></i>
-            </td>
-        </tr>
-      </tbody>
-    </table>
+    <form>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Preço</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>
+                    <input class="input-xlarge" type="text" placeholder="Nome do produto…">
+                </td>
+                <td>
+                    <input class="input-mini" type="text">
+                </td>
+                <td>
+                    <div class="input-prepend input-append">
+                    <span class="add-on">R$</span>
+                    <input class="input-mini" id="appendedPrependedInput" type="text">
+                    </div>
+                </td>
+                <td>
+                    <i class="icon-ok"></i>
+                    <i class="icon-pencil"></i>
+                    <i class="icon-remove"></i>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+    </form>
 
 {% endblock content %}
