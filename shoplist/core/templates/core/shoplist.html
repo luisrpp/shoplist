@@ -31,7 +31,7 @@
     {% for shoplist in shoplists %}
             <tr>
                 <td class="span6">
-                    <input id="listname_{{ shoplist.id }}" name="listname_{{ shoplist.id }}" type="text" placeholder="Digite o nome da lista…" value="{{ shoplist.name }}" style="display: none;" onblur="updateListName({{ shoplist.id }});">
+                    <input id="listname_{{ shoplist.id }}" name="listname_{{ shoplist.id }}" type="text" placeholder="Digite o nome da lista…" value="{{ shoplist.name }}" style="display: none;">
                     <label id="label_{{ shoplist.id }}">
                         {{ shoplist.name }}
                     </label>
