@@ -23,19 +23,30 @@
             <tr>
                 <th class="span5">Nome da Lista</td>
                 <th class="span3" style="text-align: center;">Quantidade de Produtos</td>
-                <th class="span2" style="text-align: center;">Data</td>
+                <th class="span2" style="text-align: center;">Data de Criação</td>
                 <th class="span2" style="text-align: center;">Ação</td>
             </tr>
         </thead>
         <tbody>
     {% for shoplist in shoplists %}
             <tr>
-                <td class="span6">{{ shoplist.name }}</td>
+                <td class="span6">
+                    <input id="listname_{{ shoplist.id }}" name="listname_{{ shoplist.id }}" type="text" placeholder="Digite o nome da lista…" value="{{ shoplist.name }}" style="display: none;">
+                    <label id="label_{{ shoplist.id }}">
+                        {{ shoplist.name }}
+                    </label>
+                </td>
                 <td class="span2" style="text-align: center;">{{ shoplist.num_products }}</td>
                 <td class="span2" style="text-align: center;">{{ shoplist.created_at|date:"d M Y - H\hi" }}</td>
                 <td class="span2" style="text-align: center;">
-                    <i class="icon-pencil"></i>
-                    <i class="icon-remove"></i>
+                    <div id="edit_buttons_{{ shoplist.id }}">
+                        <button class="btn" onclick="editButton({{ shoplist.id }});"><i class="icon-edit"></i></button>
+                        <button class="btn"><i class="icon-trash"></i></button>
+                    </div>
+                    <div id="update_buttons_{{ shoplist.id }}" style="display: none;">
+                        <button class="btn"><i class="icon-ok"></i></button>
+                        <button class="btn" onclick="cancelEditButton({{ shoplist.id }});"><i class="icon-stop"></i></button>
+                    </div>
                 </td>
             </tr>
     {% endfor %}
@@ -44,3 +55,34 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block js_script %}
+    <script type="text/javascript">
+        function editButton(list_id)
+        {
+            $("#label_"+list_id).hide();
+            $("#listname_"+list_id).show();
+            $("#edit_buttons_"+list_id).hide();
+            $("#update_buttons_"+list_id).show();
+            $("#listname_"+list_id).val($("#label_"+list_id).text().trim());
+            $("#listname_"+list_id).focus();
+        }
+
+        function cancelEditButton(list_id)
+        {
+            $("#label_"+list_id).show();
+            $("#listname_"+list_id).hide();
+            $("#edit_buttons_"+list_id).show();
+            $("#update_buttons_"+list_id).hide();
+        }
+
+        $(document).keyup(function(e) {
+            if (e.keyCode == 27) {
+                $('input[name^="listname_"]').hide();
+                $('label[id^="label_"]').show();
+                $('div[id^="edit_buttons_"]').show();
+                $('div[id^="update_buttons_"]').hide();
+            } // ESC pressed
+        });
+    </script>
+{% endblock js_script %}
