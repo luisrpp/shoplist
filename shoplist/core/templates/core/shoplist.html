@@ -18,7 +18,7 @@
     </form>
 
     {% if shoplists %}
-    <table class="table table-hover">
+    <table id="shoplists_table" class="table table-hover">
         <thead>
             <tr>
                 <th class="span5">Nome da Lista</th>
@@ -41,7 +41,7 @@
                 <td class="span2" style="text-align: center;">
                     <div id="edit_buttons_{{ shoplist.id }}">
                         <button class="btn" onclick="editButton({{ shoplist.id }});"><i class="icon-edit"></i></button>
-                        <button class="btn"><i class="icon-trash"></i></button>
+                        <button class="btn" onclick="removeListName({{ shoplist.id }});"><i class="icon-trash"></i></button>
                     </div>
                     <div id="update_buttons_{{ shoplist.id }}" style="display: none;">
                         <button class="btn" onclick="updateListName({{ shoplist.id }});"><i class="icon-ok"></i></button>
@@ -105,7 +105,23 @@
                     }
                 });
         }
+
+        function removeListName(list_id)
+        {
+            var shoplist_id = list_id;
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'core:remove_shoplist' %}",
+                    data: "id="+shoplist_id,
+                    success: function(data){
+                        $("#edit_buttons_"+shoplist_id).parent().parent().remove();
+                        var row_count = $("#shoplists_table > tbody > tr").length;
+                        if (row_count == 0)
+                            $("#shoplists_table").remove();
+                    }
+                });
+        }
     </script>
     {% endif %}
 {% endblock js_script %}
-

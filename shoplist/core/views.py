@@ -49,3 +49,12 @@ def update_shoplist(request):
 
         return HttpResponse(data, mimetype='application/json')
 
+
+def remove_shoplist(request):
+    if request.is_ajax():
+        sl = ShopList.objects.get(id=request.GET.get('id'))
+        sl.delete()
+
+        data = serializers.serialize('json', [])
+
+        return HttpResponse(data, mimetype='application/json')
