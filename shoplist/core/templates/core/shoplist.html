@@ -89,15 +89,15 @@
 
         function updateListName(list_id)
         {
-            var list_id = list_id;
-            var list_name = $("#listname_"+list_id).val().trim();
+            var shoplist_id = list_id;
+            var shoplist_name = $("#listname_"+shoplist_id).val().trim();
             $.ajax(
                 {
                     type: "GET",
                     url: "#",
-                    data: "id="+list_id+"&name="+list_name,
+                    data: "id="+shoplist_id+"&name="+shoplist_name,
                     success: function(){
-                        $("#label_"+list_id).text($("#listname_"+list_id).val());
+                        $("#label_"+list_id).text($("#listname_"+shoplist_id).val());
                     }
                 });
         }
