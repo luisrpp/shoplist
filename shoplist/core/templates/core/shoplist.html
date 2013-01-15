@@ -109,18 +109,20 @@
         function removeListName(list_id)
         {
             var shoplist_id = list_id;
-            $.ajax(
-                {
-                    type: "GET",
-                    url: "{% url 'core:remove_shoplist' %}",
-                    data: "id="+shoplist_id,
-                    success: function(data){
-                        $("#edit_buttons_"+shoplist_id).parent().parent().remove();
-                        var row_count = $("#shoplists_table > tbody > tr").length;
-                        if (row_count == 0)
-                            $("#shoplists_table").remove();
-                    }
-                });
+            if (confirm('Deseja realmente deletar a lista "'+$("#label_"+list_id).text().trim()+'"?')) {
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "{% url 'core:remove_shoplist' %}",
+                        data: "id="+shoplist_id,
+                        success: function(data){
+                            $("#edit_buttons_"+shoplist_id).parent().parent().remove();
+                            var row_count = $("#shoplists_table > tbody > tr").length;
+                            if (row_count == 0)
+                                $("#shoplists_table").remove();
+                        }
+                    });
+            }
         }
     </script>
     {% endif %}
