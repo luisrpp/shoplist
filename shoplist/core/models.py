@@ -39,4 +39,5 @@ class ListItem(models.Model):
         verbose_name_plural = _(u'Itens da Lista')
 
     def __unicode__(self):
-        return self.product.name   
+        return self.product.name
+

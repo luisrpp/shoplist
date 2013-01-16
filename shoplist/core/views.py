@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.template import RequestContext
-from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.core import serializers
-from models import ShopList
+from models import (ShopList, ListItem)
 from forms import ShopListForm
 
 
@@ -34,9 +37,7 @@ def _create_shoplist(request, shoplists=None):
 
     shop_list = form.save()
 
-    #TODO: Send to another page to create list items
-    context = RequestContext(request, {'form': form, 'shoplists': shoplists},)
-    return render_to_response('core/shoplist.html', context)
+    return HttpResponseRedirect(reverse('core:shoplist_items', args=[shop_list.pk]))
 
 
 def update_shoplist(request):
@@ -58,3 +59,12 @@ def remove_shoplist(request):
         data = serializers.serialize('json', [])
 
         return HttpResponse(data, mimetype='application/json')
+
+
+def shoplist_items(request, pk):
+    shop_list = get_object_or_404(ShopList, pk=pk)
+    list_items = ListItem.objects.filter(shop_list=shop_list)
+
+    context = RequestContext(request, {'shoplist': shop_list, 'list_items': list_items})
+    return render_to_response('core/shoplist_items.html', context)
+

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Lista de Compras</h1>
+        <h1><small>{{ shoplist.name }}</small></h1>
+
+        <form>
+            <label>Adicionar item:</label>
+            <input type="text" placeholder="Type something…">
+        </form>
+    </div>
+
+{% endblock content %}
+
+{% block js_script %}
+
+{% endblock js_script %}
