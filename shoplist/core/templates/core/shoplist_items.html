@@ -5,11 +5,16 @@
 
     <div class="page-header">
         <h1>Lista de Compras</h1>
-        <h1><small>{{ shoplist.name }}</small></h1>
+        <h3>{{ shoplist.name }} <small>(<a href="">editar</a>)</small></h3>
 
-        <form>
-            <label>Adicionar item:</label>
-            <input type="text" placeholder="Type something…">
+        <label>Adicionar item:</label>
+        <form class="form-inline">
+            <input class="input-large" type="text" placeholder="Produto">
+            <input class="input-mini" type="text" placeholder="Qtde">
+            <div class="input-prepend">
+            <span class="add-on">R$</span>
+            <input class="input-mini" type="text" placeholder="Preço">
+            </div>
         </form>
     </div>
 
