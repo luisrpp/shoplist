@@ -8,13 +8,16 @@
         <h3>{{ shoplist.name }} <small>(<a href="">editar</a>)</small></h3>
 
         <label>Adicionar item:</label>
-        <form class="form-inline">
-            <input class="input-large" type="text" placeholder="Produto">
-            <input class="input-mini" type="text" placeholder="Qtde">
+        <form action="{% url 'core:shoplist_items' shoplist.pk %}" class="form-inline" method="POST">
+            {% csrf_token %}
+            {{ form.shop_list.as_hidden }}
+            {{ form.product }}
+            {{ form.quantity }}
             <div class="input-prepend">
             <span class="add-on">R$</span>
-            <input class="input-mini" type="text" placeholder="Preço">
+            {{ form.price }}
             </div>
+            <input type="submit" value="Adicionar" class="btn btn-primary">
         </form>
     </div>
 
@@ -23,3 +26,4 @@
 {% block js_script %}
 
 {% endblock js_script %}
+
