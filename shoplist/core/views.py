@@ -7,8 +7,8 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.core import serializers
-from models import (ShopList, ListItem)
-from forms import (ShopListForm, ListItemForm)
+from models import (ShopList, ListItem, Product)
+from forms import (ShopListForm, ListItemForm, ProductForm)
 
 
 def shoplist(request):
@@ -58,10 +58,34 @@ def shoplist_items(request, pk):
     list_items = ListItem.objects.filter(shop_list=shop_list)
 
     if request.method == 'POST':
-        form = ListItemForm(request.POST)
+        form_p = ProductForm({ 'name': request.POST['product'] })
 
-        #TODO
+        if not form_p.is_valid():
+            form = ListItemForm(request.POST)
+            context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
+            return render_to_response('core/shoplist_items.html', context)
 
+        p, product_created = Product.objects.get_or_create(name=request.POST['product'])
+
+        post_values = request.POST.copy()
+        post_values['product'] = str(p.pk)
+
+        form = ListItemForm(post_values)
+
+        if not form.is_valid():
+            form = ListItemForm(request.POST)
+            
+            if product_created:
+                p.delete()
+
+            context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
+            return render_to_response('core/shoplist_items.html', context)
+
+        item = form.save(commit=False)
+        item.product = p
+        item.save()
+
+        form = ListItemForm(initial={'shop_list': shop_list.pk })
         context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
         return render_to_response('core/shoplist_items.html', context)
 
