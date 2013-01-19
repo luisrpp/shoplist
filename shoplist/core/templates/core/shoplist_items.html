@@ -66,7 +66,7 @@
                     </div>
                     <div id="update_buttons_{{ item.pk }}" style="display: none">
                         <button class="btn" onclick="updateButton({{ item.pk }});"><i class="icon-ok"></i></button>
-                        <button class="btn" onclick=""><i class="icon-stop"></i></button>
+                        <button class="btn" onclick="cancelButton({{ item.pk }});"><i class="icon-stop"></i></button>
                     </div>
                 </td>
             </tr>
@@ -89,6 +89,18 @@
             $("#div_price_"+list_id).show();
             $("#edit_buttons_"+list_id).hide();
             $("#update_buttons_"+list_id).show();
+        }
+
+        function cancelButton(list_id)
+        {
+            $("#label_product_"+list_id).show();
+            $("#product_"+list_id).hide();
+            $("#label_quantity_"+list_id).show();
+            $("#quantity_"+list_id).hide();
+            $("#label_price_"+list_id).show();
+            $("#div_price_"+list_id).hide();
+            $("#edit_buttons_"+list_id).show();
+            $("#update_buttons_"+list_id).hide();
         }
 
         function updateButton(list_id)
