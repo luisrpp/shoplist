@@ -35,6 +35,7 @@ class ListItem(models.Model):
     price = models.DecimalField(verbose_name=_(u'Preço'), max_digits=10, decimal_places=2, null=True, blank=True)
 
     class Meta:
+        ordering = ['product']
         verbose_name = _(u'Item da Lista')
         verbose_name_plural = _(u'Itens da Lista')
 
