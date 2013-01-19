@@ -32,9 +32,11 @@
             <tr>
                 <td class="span6">
                     <input id="listname_{{ shoplist.id }}" name="listname_{{ shoplist.id }}" type="text" placeholder="Digite o nome da lista…" value="{{ shoplist.name }}" style="display: none;">
-                    <label id="label_{{ shoplist.id }}">
-                        <a href="{% url 'core:shoplist_items' shoplist.pk %}">{{ shoplist.name }}</a>
-                    </label>
+                    <a href="{% url 'core:shoplist_items' shoplist.pk %}">
+                        <label id="label_{{ shoplist.id }}">
+                            {{ shoplist.name }}
+                        </label>
+                    </a>
                 </td>
                 <td class="span2" style="text-align: center;">{{ shoplist.num_products }}</td>
                 <td class="span2" style="text-align: center;">{{ shoplist.created_at|date:"d M Y - H\hi" }}</td>

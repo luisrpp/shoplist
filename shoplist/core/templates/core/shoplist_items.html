@@ -35,23 +35,37 @@
         {% for item in list_items %}
             <tr>
                 <td class="span5">
-                    {{ item.product.name }}
+                    <input id="product_{{ item.pk }}" name="product_{{ item.pk }}" type="text" value="" placeholder="Produto" class="input-large" style="display: none;">
+                    <a href="#">
+                        <label id="label_product_{{ item.pk }}">
+                            {{ item.product.name }}
+                        </label>
+                    </a>
                 </td>
                 <td class="span3" style="text-align: center;">
-                    {{ item.quantity }}
+                    <input id="quantity_{{ item.pk }}" name="quantity_{{ item.pk }}" type="text" value="" placeholder="Qtde" class="input-mini" style="display: none;">
+                    <label id="label_quantity_{{ item.pk }}">
+                        {{ item.quantity }}
+                    </label>
                 </td>
                 <td class="span2" style="text-align: center;">
-                    {% if item.price %}
-                    R$ {{ item.price }}
-                    {% endif %}
+                    <div id="div_price_{{ item.pk }}" class="input-prepend" style="display: none;">
+                        <span class="add-on">R$</span>
+                        <input id="price_{{ item.pk }}" name="price_{{ item.pk }}" type="text" value="" placeholder="Preço" class="input-mini">
+                    </div>
+                    <label id="label_price_{{ item.pk }}">
+                        {% if item.price %}
+                        R$ {{ item.price }}
+                        {% endif %}
+                    </label>
                 </td>
                 <td class="span2" style="text-align: center;">
-                    <div id="">
-                        <button class="btn" onclick=""><i class="icon-edit"></i></button>
+                    <div id="edit_buttons_{{ item.pk }}">
+                        <button class="btn" onclick="editButton({{ item.pk }});"><i class="icon-edit"></i></button>
                         <button class="btn" onclick=""><i class="icon-trash"></i></button>
                     </div>
-                    <div id="" style="display: none;">
-                        <button class="btn" onclick=""><i class="icon-ok"></i></button>
+                    <div id="update_buttons_{{ item.pk }}" style="display: none">
+                        <button class="btn" onclick="updateButton({{ item.pk }});"><i class="icon-ok"></i></button>
                         <button class="btn" onclick=""><i class="icon-stop"></i></button>
                     </div>
                 </td>
@@ -64,6 +78,29 @@
 {% endblock content %}
 
 {% block js_script %}
+    <script type="text/javascript">
+        function editButton(list_id)
+        {
+            $("#label_product_"+list_id).hide();
+            $("#product_"+list_id).show();
+            $("#label_quantity_"+list_id).hide();
+            $("#quantity_"+list_id).show();
+            $("#label_price_"+list_id).hide();
+            $("#div_price_"+list_id).show();
+            $("#edit_buttons_"+list_id).hide();
+            $("#update_buttons_"+list_id).show();
+        }
 
+        function updateButton(list_id)
+        {
+            $("#label_product_"+list_id).show();
+            $("#product_"+list_id).hide();
+            $("#label_quantity_"+list_id).show();
+            $("#quantity_"+list_id).hide();
+            $("#label_price_"+list_id).show();
+            $("#div_price_"+list_id).hide();
+            $("#edit_buttons_"+list_id).show();
+            $("#update_buttons_"+list_id).hide();
+        }
+    </script>
 {% endblock js_script %}
-
