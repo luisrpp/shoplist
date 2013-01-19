@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.core import serializers
+import string
 from models import (ShopList, ListItem, Product)
 from forms import (ShopListForm, ListItemForm, ProductForm)
 
@@ -65,7 +66,7 @@ def shoplist_items(request, pk):
             context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
             return render_to_response('core/shoplist_items.html', context)
 
-        p, product_created = Product.objects.get_or_create(name=request.POST['product'])
+        p, product_created = Product.objects.get_or_create(name=string.capwords(request.POST['product']))
 
         post_values = request.POST.copy()
         post_values['product'] = str(p.pk)
