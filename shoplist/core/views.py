@@ -70,4 +70,3 @@ def shoplist_items(request, pk):
 
         context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
         return render_to_response('core/shoplist_items.html', context)
-
