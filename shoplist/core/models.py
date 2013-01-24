@@ -2,7 +2,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-
 class ShopList(models.Model):
     name = models.CharField(max_length=200, verbose_name=_(u'Lista'))
     created_at = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)

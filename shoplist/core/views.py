@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.core import serializers
-import string
 from models import (ShopList, ListItem, Product)
 from forms import (ShopListForm, ListItemForm)
 
@@ -67,11 +66,7 @@ def shoplist_items(request, pk):
             context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
             return render_to_response('core/shoplist_items.html', context)
 
-        p, product_created = Product.objects.get_or_create(name=string.capwords(request.POST['product']))
-
-        item = form.save(commit=False)
-        item.product = p
-        item.save()
+        form.save()
 
         form = ListItemForm(initial={'shop_list': shop_list.pk })
         context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
@@ -92,12 +87,10 @@ def update_list_item(request, shoplist_id):
         form = ListItemForm(get_values)
 
         #TODO form validation
-
-        p, product_created = Product.objects.get_or_create(name=string.capwords(request.GET['product']))
+        form.is_valid()
 
         item = form.save(commit=False)
         item.pk = request.GET['id']
-        item.product = p
         item.save()
 
         data = serializers.serialize('json', [])
@@ -113,3 +106,4 @@ def remove_list_item(request, shoplist_id):
         data = serializers.serialize('json', [])
 
         return HttpResponse(data, mimetype='application/json')
+

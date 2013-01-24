@@ -43,7 +43,7 @@
                     </a>
                 </td>
                 <td class="span3" style="text-align: center;">
-                    <input id="quantity_{{ item.pk }}" name="quantity_{{ item.pk }}" type="text" value="" placeholder="Qtde" class="input-mini" style="display: none;">
+                    <input id="quantity_{{ item.pk }}" name="quantity_{{ item.pk }}" type="text" value="" placeholder="Qtde" class="quantity input-mini" style="display: none;">
                     <label id="label_quantity_{{ item.pk }}">
                         {{ item.quantity }}
                     </label>
@@ -51,11 +51,11 @@
                 <td class="span2" style="text-align: center;">
                     <div id="div_price_{{ item.pk }}" class="input-prepend" style="display: none;">
                         <span class="add-on">R$</span>
-                        <input id="price_{{ item.pk }}" name="price_{{ item.pk }}" type="text" value="" placeholder="Preço" class="input-mini">
+                        <input id="price_{{ item.pk }}" name="price_{{ item.pk }}" type="text" value="" placeholder="Preço" class="real_currency input-mini">
                     </div>
                     <label id="label_price_{{ item.pk }}">
                         {% if item.price %}
-                        R$ {{ item.price }}
+                        R$ {{ item.price|floatformat:2 }}
                         {% endif %}
                     </label>
                 </td>
@@ -166,5 +166,15 @@
                 $('div[id^="update_buttons_"]').hide();
             } // ESC pressed
         });
+
+        $(function(){
+            $('.real_currency').maskMoney({decimal:',',thousands:'.'});
+            $('.quantity').mask('9999');
+        });
     </script>
+
+    <script src="{{ STATIC_URL }}js/jquery-plugins/mask/jquery.mask.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery-plugins/maskmoney/jquery.maskMoney.js"></script>
+
 {% endblock js_script %}
+
