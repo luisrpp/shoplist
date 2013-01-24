@@ -22,7 +22,7 @@
     </div>
 
     {% if list_items %}
-    <table id="shoplists_table" class="table table-hover">
+    <table id="list_items_table" class="table table-hover">
         <thead>
             <tr>
                 <th class="span5">Produto</th>
@@ -62,7 +62,7 @@
                 <td class="span2" style="text-align: center;">
                     <div id="edit_buttons_{{ item.pk }}">
                         <button class="btn" onclick="editButton({{ item.pk }});"><i class="icon-edit"></i></button>
-                        <button class="btn" onclick=""><i class="icon-trash"></i></button>
+                        <button class="btn" onclick="removeButton({{ item.pk }});"><i class="icon-trash"></i></button>
                     </div>
                     <div id="update_buttons_{{ item.pk }}" style="display: none">
                         <button class="btn" onclick="updateButton({{ item.pk }});"><i class="icon-ok"></i></button>
@@ -79,40 +79,92 @@
 
 {% block js_script %}
     <script type="text/javascript">
-        function editButton(list_id)
+        function editButton(item_id)
         {
-            $("#label_product_"+list_id).hide();
-            $("#product_"+list_id).show();
-            $("#label_quantity_"+list_id).hide();
-            $("#quantity_"+list_id).show();
-            $("#label_price_"+list_id).hide();
-            $("#div_price_"+list_id).show();
-            $("#edit_buttons_"+list_id).hide();
-            $("#update_buttons_"+list_id).show();
+            $("#label_product_"+item_id).hide();
+            $("#product_"+item_id).show();
+            $("#product_"+item_id).val($("#label_product_"+item_id).text().trim());
+            $("#label_quantity_"+item_id).hide();
+            $("#quantity_"+item_id).show();
+            $("#quantity_"+item_id).val($("#label_quantity_"+item_id).text().trim());
+            $("#label_price_"+item_id).hide();
+            $("#div_price_"+item_id).show();
+            var pc = $("#label_price_"+item_id).text().trim();
+            pc = pc.replace("R$ ", "");
+            $("#price_"+item_id).val(pc);
+            $("#edit_buttons_"+item_id).hide();
+            $("#update_buttons_"+item_id).show();
         }
 
-        function cancelButton(list_id)
+        function cancelButton(item_id)
         {
-            $("#label_product_"+list_id).show();
-            $("#product_"+list_id).hide();
-            $("#label_quantity_"+list_id).show();
-            $("#quantity_"+list_id).hide();
-            $("#label_price_"+list_id).show();
-            $("#div_price_"+list_id).hide();
-            $("#edit_buttons_"+list_id).show();
-            $("#update_buttons_"+list_id).hide();
+            $("#label_product_"+item_id).show();
+            $("#product_"+item_id).hide();
+            $("#label_quantity_"+item_id).show();
+            $("#quantity_"+item_id).hide();
+            $("#label_price_"+item_id).show();
+            $("#div_price_"+item_id).hide();
+            $("#edit_buttons_"+item_id).show();
+            $("#update_buttons_"+item_id).hide();
         }
 
-        function updateButton(list_id)
+        function updateButton(item_id)
         {
-            $("#label_product_"+list_id).show();
-            $("#product_"+list_id).hide();
-            $("#label_quantity_"+list_id).show();
-            $("#quantity_"+list_id).hide();
-            $("#label_price_"+list_id).show();
-            $("#div_price_"+list_id).hide();
-            $("#edit_buttons_"+list_id).show();
-            $("#update_buttons_"+list_id).hide();
+            var product = $("#product_"+item_id).val().trim();
+            var qtd = $("#quantity_"+item_id).val().trim();
+            var price = $("#price_"+item_id).val().trim();
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'core:update_list_item' shoplist.pk %}",
+                    data: "id="+item_id+"&product="+product+"&quantity="+qtd+"&price="+price,
+                    success: function(data){
+                        $("#label_product_"+item_id).show();
+                        $("#product_"+item_id).hide();
+                        $("#label_product_"+item_id).text(product);
+                        $("#label_quantity_"+item_id).show();
+                        $("#quantity_"+item_id).hide();
+                        $("#label_quantity_"+item_id).text(qtd);
+                        $("#label_price_"+item_id).show();
+                        $("#div_price_"+item_id).hide();
+                        if (price != '')
+                            $("#label_price_"+item_id).text("R$ " + price);
+                        $("#edit_buttons_"+item_id).show();
+                        $("#update_buttons_"+item_id).hide();
+                    }
+                });
         }
+
+        function removeButton(item_id)
+        {
+            if (confirm('Deseja realmente deletar o item "'+$("#label_product_"+item_id).text().trim()+'"?')) {
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "{% url 'core:remove_list_item' shoplist.pk %}",
+                        data: "id="+item_id,
+                        success: function(data){
+                            $("#edit_buttons_"+item_id).parent().parent().remove();
+                            var row_count = $("#list_items_table > tbody > tr").length;
+                            if (row_count == 0)
+                                $("#list_items_table").remove();
+                        }
+                    });
+            }
+        }
+
+        $(document).keyup(function(e)
+        {
+            if (e.keyCode == 27) {
+                $('input[name^="product_"]').hide();
+                $('label[id^="label_product_"]').show();
+                $('input[name^="quantity_"]').hide();
+                $('label[id^="label_quantity_"]').show();
+                $('div[id^="div_price_"]').hide();
+                $('label[id^="label_price_"]').show();
+                $('div[id^="edit_buttons_"]').show();
+                $('div[id^="update_buttons_"]').hide();
+            } // ESC pressed
+        });
     </script>
 {% endblock js_script %}

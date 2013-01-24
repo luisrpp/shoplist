@@ -43,11 +43,11 @@
                 <td class="span2" style="text-align: center;">
                     <div id="edit_buttons_{{ shoplist.id }}">
                         <button class="btn" onclick="editButton({{ shoplist.id }});"><i class="icon-edit"></i></button>
-                        <button class="btn" onclick="removeListName({{ shoplist.id }});"><i class="icon-trash"></i></button>
+                        <button class="btn" onclick="removeButton({{ shoplist.id }});"><i class="icon-trash"></i></button>
                     </div>
                     <div id="update_buttons_{{ shoplist.id }}" style="display: none;">
-                        <button class="btn" onclick="updateListName({{ shoplist.id }});"><i class="icon-ok"></i></button>
-                        <button class="btn" onclick="cancelEditButton({{ shoplist.id }});"><i class="icon-stop"></i></button>
+                        <button class="btn" onclick="updateButton({{ shoplist.id }});"><i class="icon-ok"></i></button>
+                        <button class="btn" onclick="cancelButton({{ shoplist.id }});"><i class="icon-stop"></i></button>
                     </div>
                 </td>
             </tr>
@@ -71,7 +71,7 @@
             $("#listname_"+list_id).focus();
         }
 
-        function cancelEditButton(list_id)
+        function cancelButton(list_id)
         {
             $("#label_"+list_id).show();
             $("#listname_"+list_id).hide();
@@ -79,17 +79,7 @@
             $("#update_buttons_"+list_id).hide();
         }
 
-        $(document).keyup(function(e)
-        {
-            if (e.keyCode == 27) {
-                $('input[name^="listname_"]').hide();
-                $('label[id^="label_"]').show();
-                $('div[id^="edit_buttons_"]').show();
-                $('div[id^="update_buttons_"]').hide();
-            } // ESC pressed
-        });
-
-        function updateListName(list_id)
+        function updateButton(list_id)
         {
             var shoplist_id = list_id;
             var shoplist_name = $("#listname_"+shoplist_id).val().trim();
@@ -108,7 +98,7 @@
                 });
         }
 
-        function removeListName(list_id)
+        function removeButton(list_id)
         {
             var shoplist_id = list_id;
             if (confirm('Deseja realmente deletar a lista "'+$("#label_"+list_id).text().trim()+'"?')) {
@@ -126,6 +116,16 @@
                     });
             }
         }
+
+        $(document).keyup(function(e)
+        {
+            if (e.keyCode == 27) {
+                $('input[name^="listname_"]').hide();
+                $('label[id^="label_"]').show();
+                $('div[id^="edit_buttons_"]').show();
+                $('div[id^="update_buttons_"]').hide();
+            } // ESC pressed
+        });
     </script>
     {% endif %}
 {% endblock js_script %}

@@ -34,9 +34,3 @@ class ListItemForm(forms.ModelForm):
             'price': forms.TextInput(attrs={'class': 'input-mini', 'placeholder': _(u'Preço')}),
         }
         exclude = ('product',)
-
-
-class ProductForm(forms.ModelForm):
-
-    class Meta:
-        model = Product

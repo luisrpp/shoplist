@@ -9,7 +9,7 @@ from django.db.models import Count
 from django.core import serializers
 import string
 from models import (ShopList, ListItem, Product)
-from forms import (ShopListForm, ListItemForm, ProductForm)
+from forms import (ShopListForm, ListItemForm)
 
 
 def shoplist(request):
@@ -21,6 +21,7 @@ def shoplist(request):
         form = ShopListForm(request.POST)
 
         if not form.is_valid():
+            #TODO form validation
             context = RequestContext(request, {'form': form, 'shoplists': shoplists},)
             return render_to_response('core/shoplist.html', context)
 
@@ -59,28 +60,14 @@ def shoplist_items(request, pk):
     list_items = ListItem.objects.filter(shop_list=shop_list)
 
     if request.method == 'POST':
-        form_p = ProductForm({ 'name': request.POST['product'] })
+        form = ListItemForm(request.POST)
 
-        if not form_p.is_valid():
-            form = ListItemForm(request.POST)
+        if not form.is_valid():
+            #TODO form validation
             context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
             return render_to_response('core/shoplist_items.html', context)
 
         p, product_created = Product.objects.get_or_create(name=string.capwords(request.POST['product']))
-
-        post_values = request.POST.copy()
-        post_values['product'] = str(p.pk)
-
-        form = ListItemForm(post_values)
-
-        if not form.is_valid():
-            form = ListItemForm(request.POST)
-            
-            if product_created:
-                p.delete()
-
-            context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
-            return render_to_response('core/shoplist_items.html', context)
 
         item = form.save(commit=False)
         item.product = p
@@ -95,3 +82,34 @@ def shoplist_items(request, pk):
 
         context = RequestContext(request, {'form': form, 'shoplist': shop_list, 'list_items': list_items})
         return render_to_response('core/shoplist_items.html', context)
+
+
+def update_list_item(request, shoplist_id):
+    if request.is_ajax():
+        get_values = request.GET.copy()
+        get_values['shop_list'] = str(shoplist_id)
+
+        form = ListItemForm(get_values)
+
+        #TODO form validation
+
+        p, product_created = Product.objects.get_or_create(name=string.capwords(request.GET['product']))
+
+        item = form.save(commit=False)
+        item.pk = request.GET['id']
+        item.product = p
+        item.save()
+
+        data = serializers.serialize('json', [])
+
+        return HttpResponse(data, mimetype='application/json')
+
+
+def remove_list_item(request, shoplist_id):
+    if request.is_ajax():
+        li = ListItem.objects.get(id=request.GET.get('id'))
+        li.delete()
+
+        data = serializers.serialize('json', [])
+
+        return HttpResponse(data, mimetype='application/json')

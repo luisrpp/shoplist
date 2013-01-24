@@ -5,5 +5,6 @@ urlpatterns = patterns('shoplist.core.views',
     url(r'^shoplist/update$', 'update_shoplist', name='update_shoplist'),
     url(r'^shoplist/remove$', 'remove_shoplist', name='remove_shoplist'),
     url(r'^shoplist/(\d+)/items$', 'shoplist_items', name='shoplist_items'),
+    url(r'^shoplist/(\d+)/item/update$', 'update_list_item', name='update_list_item'),
+    url(r'^shoplist/(\d+)/item/remove$', 'remove_list_item', name='remove_list_item'),
 )
-
