@@ -17,7 +17,8 @@ class OffersFinder(object):
         if(self.action):
             offers = self.action.find(product)
 
-            result = { 'summary': {'max_price': Decimal(0.00),
+            result = { 'summary': { 'product' : product,
+                                    'max_price': Decimal(0.00),
                                     'min_price': Decimal(0.00),
                                     'avg_price': Decimal(0.00),
                                     'count': len(offers)}, 
