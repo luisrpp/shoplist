@@ -35,7 +35,7 @@ class OffersFinder(object):
 
 
 
-class OfferFinderFactory(object):
+class OffersFinderFactory(object):
     """
     Factory class to create different Offer Finder strategy instances.
     """
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         print "Usage %s product_name" % sys.argv[0]
         sys.exit(2)
 
-    bp_offers = OfferFinderFactory.get_instance(strategy="BUSCAPE")
+    bp_offers = OffersFinderFactory.get_instance(strategy="BUSCAPE")
     offers = bp_offers.find(sys.argv[1])['offers']
 
     for offer in offers:
