@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from buscape import Buscape as BP
+from unicodedata import normalize
 import json
 import os
 
@@ -11,10 +12,16 @@ class Buscape(object):
     Class to get offers using the BUSCAPE API.
     """
 
+    def _remove_accents(self, text, codif='utf-8'):
+        return normalize('NFKD', text.decode(codif)).encode('ASCII','ignore')
+
+
     def find(self, product):
         try:
             apiki_buscape = BP(applicationID=BUSCAPE_APP_ID)
             apiki_buscape.set_sandbox()
+
+            product = self._remove_accents(product)
 
             bp_offers = apiki_buscape.find_offer_list(keyword=product.replace(' ',','), format='json')
             bp_offers = bp_offers.get('data')
@@ -39,5 +46,5 @@ class Buscape(object):
 
             return offers
 
-        except Exception:
+        except Exception as e:
             return []
