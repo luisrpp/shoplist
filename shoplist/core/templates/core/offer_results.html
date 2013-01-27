@@ -1,11 +1,34 @@
 {% load url from future %}
 
 {% if results|length %}
+    <small>
     <p><strong>Produto:</strong> {{ results.summary.product }}</p>
     <p><strong>Maior preço:</strong> R$ {{ results.summary.max_price|floatformat:2 }}</p>
     <p><strong>Menor preço:</strong> R$ {{ results.summary.min_price|floatformat:2 }}</p>
     <p><strong>Média de preço:</strong> R$ {{ results.summary.avg_price|floatformat:2 }}</p>
     <p><strong>Total de ofertas encontradas:</strong> {{ results.summary.count }}</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="span1"></th>
+                <th class="span3">Produto</th>
+                <th class="span2">Vendedor</th>
+                <th class="span2">Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offer in results.offers %}
+            <tr>
+                <td><img src="{{ offer.thumbnail }}" style="max-height: 50px; max-width: 50px"></td>
+                <td>{{ offer.product }}</td>
+                <td><a href="{{ offer.url }}" target="_blank">{{ offer.seller }}</a></td>
+                <td>R$ {{ offer.price|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </small>
 {% else %}
     <p>Nenhum registro encontrado!</p>
 {% endif %}
