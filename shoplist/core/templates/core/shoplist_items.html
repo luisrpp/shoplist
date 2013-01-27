@@ -80,6 +80,9 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Ofertas</h3>
         </div>
+        <div class="span12" align="center" id="spinner">
+            <img src="{{ STATIC_URL }}bootstrap/img/spinner.gif"/>
+        </div>
         <div class="modal-body">
         </div>
         <div class="modal-footer">
@@ -100,6 +103,12 @@
             $('#productModal').modal('show');
             $('.modal-body').html('&nbsp;').load(uri);
         }
+
+        $( document ).ajaxStart( function() {
+            $('#spinner').show();
+        }).ajaxStop( function() {
+            $('#spinner').hide();
+        });
 
         function editButton(item_id)
         {
