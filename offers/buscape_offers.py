@@ -7,6 +7,9 @@ BUSCAPE_APP_ID = os.environ.get('BUSCAPE_APP_ID')
 
 
 class Buscape(object):
+    """
+    Class to get offers using the BUSCAPE API.
+    """
 
     def find(self, product):
         try:
