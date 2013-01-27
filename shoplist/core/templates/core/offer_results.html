@@ -1,0 +1,11 @@
+{% load url from future %}
+
+{% if results|length %}
+    <p><strong>Produto:</strong> {{ results.summary.product }}</p>
+    <p><strong>Maior preço:</strong> R$ {{ results.summary.max_price|floatformat:2 }}</p>
+    <p><strong>Menor preço:</strong> R$ {{ results.summary.min_price|floatformat:2 }}</p>
+    <p><strong>Média de preço:</strong> R$ {{ results.summary.avg_price|floatformat:2 }}</p>
+    <p><strong>Total de ofertas encontradas:</strong> {{ results.summary.count }}</p>
+{% else %}
+    <p>Nenhum registro encontrado!</p>
+{% endif %}

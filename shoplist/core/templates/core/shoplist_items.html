@@ -36,7 +36,7 @@
             <tr>
                 <td class="span5">
                     <input id="product_{{ item.pk }}" name="product_{{ item.pk }}" type="text" value="" placeholder="Produto" class="input-large" style="display: none;">
-                    <a href="#">
+                    <a onclick="productButton({{ item.pk }});">
                         <label id="label_product_{{ item.pk }}">
                             {{ item.product.name }}
                         </label>
@@ -73,12 +73,34 @@
         {% endfor %}
         </tbody>
     </table>
+    
+    <!-- Modal -->
+    <div id="productModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Ofertas</h3>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+
     {% endif %}
 
 {% endblock content %}
 
 {% block js_script %}
     <script type="text/javascript">
+        function productButton(item_id)
+        {
+            var product_name = $("#label_product_"+item_id).text().trim();
+            var uri = '{% url 'core:search_product_offers' %}?product=' + encodeURIComponent(product_name);
+            $('#productModal').modal('show');
+            $('.modal-body').html('&nbsp;').load(uri);
+        }
+
         function editButton(item_id)
         {
             $("#label_product_"+item_id).hide();

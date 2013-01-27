@@ -107,3 +107,20 @@ def remove_list_item(request, shoplist_id):
 
         return HttpResponse(data, mimetype='application/json')
 
+
+def search_product_offers(request):
+    if request.is_ajax():
+        from offers.online_offers import OffersFinderFactory
+
+        offers = OffersFinderFactory.get_instance(strategy="BUSCAPE")
+        results = offers.find(request.GET.get('product'))
+
+        print results['summary']
+
+        template = 'core/offer_results.html'
+        data = {
+            'results': results,
+        }
+        context = RequestContext(request)
+
+        return render_to_response(template, data, context)
