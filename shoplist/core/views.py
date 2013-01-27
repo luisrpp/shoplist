@@ -112,10 +112,11 @@ def search_product_offers(request):
     if request.is_ajax():
         from offers.online_offers import OffersFinderFactory
 
-        offers = OffersFinderFactory.get_instance(strategy="BUSCAPE")
-        results = offers.find(request.GET.get('product'))
+        product = request.GET.get('product')
+        product = product.encode("utf8")
 
-        print results['summary']
+        offers = OffersFinderFactory.get_instance(strategy="BUSCAPE")
+        results = offers.find(product)
 
         template = 'core/offer_results.html'
         data = {
