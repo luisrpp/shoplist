@@ -1,6 +1,6 @@
 {% load url from future %}
 
-{% if results|length %}
+{% if results.offers|length %}
     <small>
     <p><strong>Produto:</strong> {{ results.summary.product }}</p>
     <p><strong>Maior preço:</strong> R$ {{ results.summary.max_price|floatformat:2 }}</p>
@@ -30,5 +30,5 @@
     </table>
     </small>
 {% else %}
-    <p>Nenhum registro encontrado!</p>
+    <p>Nenhuma oferta encontrada!</p>
 {% endif %}
