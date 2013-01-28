@@ -2,7 +2,32 @@
 {% load url from future %}
 
 {% block content %}
-        <p>
-          <a class="btn btn-primary btn-large" href="{% url 'core:shoplist' %}">Criar Lista</a>
-        </p>
+        <div class="hero-unit">
+            <h1>Shoplist<h2></h1>
+            <h2>A sua lista de compras inteligente.</h2>
+            <br>    
+            <p>
+              <a class="btn btn-primary btn-large" href="{% url 'core:shoplist' %}">Criar Lista</a>
+            </p>
+        </div>
+        <div class="row">
+            <div class="span4">
+                <h2>Crie</h2>
+                <p>Crie rapidamente sua lista de compras. Reaproveite itens de listas
+                anteriores. Acompanhe seus gastos. Veja quais os itens mais comprados.
+                Export sua lista para diversos formatos.</p>
+            </div>
+            <div class="span4">
+                <h2>Compare</h2>
+                <p>Compare os preços dos itens de sua lista utilizando serviços de busca online.
+                Veja quanto gastou na última compra. Verifique estimativa de gastos para não ter
+                surpresas no caixa.</p>
+            </div>
+            <div class="span4">
+                <h2>Compartilhe</h2>
+                <p>Compartilhe sua lista de compras com amigos. Compartilhe os preços de produtos
+                nas lojas de sua preferência. Recomende locais de compra. Compartilhe sua lista
+                por e-mail. Seja social.</p>
+            </div>
+        </div>
 {% endblock content %}

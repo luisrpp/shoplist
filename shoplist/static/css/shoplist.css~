@@ -4,7 +4,7 @@ body {
 
 .hero-unit {
     background-color: #FFFFFF;
-    background-image: url("../img/shoplist_hero-unit.jpg");
+    background-image: url("../img/supermarket.jpg");
     background-position: 50% top;
     background-repeat: no-repeat;
     color: #FFFFFF;
