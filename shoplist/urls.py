@@ -7,12 +7,18 @@ from django.conf import settings
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    # Main Page
+    url(r'^$', 'shoplist.core.views.index', name='index'),
     # Home
-    (r'^$', direct_to_template, {'template': 'index.html'}),
+    url(r'^home/$', 'shoplist.core.views.home', name='home'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     # Core app
     (r'^', include('shoplist.core.urls', namespace='core')),
+    # django-social-auth
+    url(r'', include('social_auth.urls')),
+    # Logout using django.contrib.auth
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 )
 
 if settings.DEBUG:
@@ -24,3 +30,4 @@ else:
             'document_root': settings.STATIC_ROOT,
             'insecure': True}),
     )
+

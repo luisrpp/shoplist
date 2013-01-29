@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+
 
 class ShopList(models.Model):
     name = models.CharField(max_length=200, verbose_name=_(u'Lista'))
+    user = models.ForeignKey(User, verbose_name=_(u'Usuário'))
     created_at = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
 
     class Meta:
@@ -32,6 +35,7 @@ class ListItem(models.Model):
     product = models.ForeignKey(Product, verbose_name=_(u'Produto'))
     quantity = models.IntegerField(verbose_name=_(u'Quantidade'))
     price = models.DecimalField(verbose_name=_(u'Preço'), max_digits=10, decimal_places=2, null=True, blank=True)
+    user = models.ForeignKey(User, verbose_name=_(u'Usuário'))
 
     class Meta:
         ordering = ['product']
