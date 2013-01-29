@@ -6,8 +6,8 @@ from django.utils.translation import ugettext as _
 
 class ShopList(models.Model):
     name = models.CharField(max_length=200, verbose_name=_(u'Lista'))
-    user = models.ForeignKey(User, verbose_name=_(u'Usuário'))
     created_at = models.DateTimeField(verbose_name=_(u'Data de criação'), auto_now_add=True)
+    user = models.ForeignKey(User, verbose_name=_(u'Usuário'))
 
     class Meta:
         ordering = ['-created_at']
