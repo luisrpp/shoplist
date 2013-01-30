@@ -9,6 +9,7 @@
             <p>
               <a class="btn btn-danger btn-large" href="{% url 'socialauth_begin' 'google' %}">Login via Google</a>
               <a class="btn btn-primary btn-large" href="{% url 'socialauth_begin' 'facebook' %}">Login via Facebook</a>
+              <a rel="nofollow" class="btn btn-warning btn-large" id="browserid" href="#">Login via Mozilla Persona</a>
             </p>
         </div>
         <div class="row">
@@ -32,3 +33,32 @@
             </div>
         </div>
 {% endblock content %}
+
+{% block js_script %}
+  <script src="https://login.persona.org/include.js"></script>
+
+  <form method="post" action="/complete/browserid/">
+    <input type="hidden" name="assertion" value="" />
+
+    <script type="text/javascript">
+      $(function () {
+        $('#browserid').click(function (e) {
+          e.preventDefault();
+          var self = $(this);
+
+          navigator.id.get(function (assertion) {
+            if (assertion) {
+              self.parent('form')
+                    .find('input[type=hidden]')
+                      .attr('value', assertion)
+                    .end()
+                    .submit();
+            } else {
+              alert('Some error occurred');
+            }
+          });
+        });
+      });
+    </script>
+  </form>
+{% endblock js_script %}

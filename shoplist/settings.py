@@ -164,6 +164,7 @@ LOGGING = {
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.browserid.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
