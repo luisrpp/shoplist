@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 # Django settings for shoplist project.
 
 import os
@@ -13,9 +13,18 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
+    ('Rogério', 'rogeriodpaguilarbr@gmail.com'),
 )
 
 MANAGERS = ADMINS
+
+#===========E-MAIL CONFIGURATION===============
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='simpleshoplist2@gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_PASSWORD='sim$h0p1i$tple'
+EMAIL_USE_TLS=True
+#===========END E-MAIL CONFIGURATIOn===========
 
 DATABASES = {
     'default': {
@@ -128,6 +137,7 @@ INSTALLED_APPS = (
     'social_auth',
     # My apps
     'shoplist.core',
+    'shoplist.contact'
 )
 
 # A sample logging configuration. The only tangible logging

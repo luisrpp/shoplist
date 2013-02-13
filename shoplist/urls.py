@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # Core app
     (r'^', include('shoplist.core.urls', namespace='core')),
+   # contact form
+    url(r'^', include('shoplist.contact.urls', namespace='contact')),
     # django-social-auth
     url(r'', include('social_auth.urls')),
     # Logout using django.contrib.auth

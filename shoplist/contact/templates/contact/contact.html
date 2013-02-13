@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block content %}
+
+	<div class="page-header">
+	  <h1><small>Contato</small></h1>
+	</div>
+
+    <form action="{% url 'contact:contact' %}" method="post" class="form-horizontal" id="id_form_contact">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+ 			<div class="row">       
+	 			<div class="span3 offset2">
+					<div class="alert alert-error">
+		              <button type="button" class="close" data-dismiss="alert">×</button>
+					  <ul class="errorlist">
+			              {% for field in form %}
+			              	{% for error in field.errors %}
+									<li>
+										{{ field.label }}
+										{{ field.errors.as_ul }}
+									</li>
+							{% endfor %}							
+						  {% endfor %}							
+					  </ul>									              
+			        </div>
+			     </div>
+			</div>		     
+        {% endif %}
+
+
+		{% if messages %}
+		 			<div class="row">       
+			 			<div class="span3 offset2">
+							<div class="alert alert-success">
+				              <button type="button" class="close" data-dismiss="alert">×</button>
+								<ul class="messages">
+								    {% for message in messages %}
+								    	{{ message }}
+								    {% endfor %}
+								</ul>
+					        </div>
+					     </div>
+					</div>		     
+		{% endif %}
+
+        
+            
+			  <div class="control-group">
+			    <label class="control-label" for="inputEmail">Nome</label>
+			    <div class="controls">
+					{{ form.name }}    
+			    </div>
+			    
+			    
+			  </div>
+			
+			  <div class="control-group">
+			    <label class="control-label" for="inputEmail">E-mail</label>
+			    <div class="controls">
+					{{ form.email }}    
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <label class="control-label" for="inputEmail">Mensagem</label>
+			    <div class="controls">
+					{{ form.message }}    
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <div class="controls">
+			      <button type="submit" class="btn btn-primary btn-large" id="id_btn_send">Enviar</button>
+			      <button type="button" class="btn btn-primary btn-large" id="id_btn_back" style="display: none;">Voltar</button>
+			    </div>
+			  </div>
+    </form>
+{% endblock content %}
+
+{% block js_script %}
+	<script language="javascript">
+		$(
+				function(){
+					{# Activates the contact link #}
+					$('#id_link_home').removeClass('active');
+					$('#id_link_about').removeClass('active');
+					$('#id_link_contact').parent().addClass('active');
+					
+					{# When user clicks on submit button, add the disabled class to the button and prevent future submits until the current is finished #}
+					$('#id_form_contact').submit(
+							
+							function() {
+								$('#id_btn_send').addClass('disabled');
+								$(this).submit(
+										function(){return false;}		
+									);
+							}
+					);
+					
+					{# Returns to index #}
+					$('#id_btn_back').click(
+							function() {
+								location.href = "{% url 'index' %}";
+							}
+					);
+
+					{# If the message was sent, disable the send button and enable the back button #}
+					{% if messages %}
+						$('#id_btn_back').css('display', 'inline');
+						$('#id_btn_send').css('display', 'none');
+					{% endif %}
+				}
+		);
+
+		
+		</script>
+{% endblock js_script %}

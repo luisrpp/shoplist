@@ -37,9 +37,9 @@
               {% endif %}
             </p>
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">Sobre</a></li>
-              <li><a href="#contact">Contato</a></li>
+              <li class="active" id="id_link_home"><a href="#">Home</a></li>
+              <li><a href="#about" id="id_link_about">Sobre</a></li>
+              <li><a href="{% url 'contact:contact' %}" id="id_link_contact">Contato</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

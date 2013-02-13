@@ -11,3 +11,6 @@ Scripts
 database.db
 .DS_Store
 set_locale.sh
+.project
+.pydevproject
+.settings
