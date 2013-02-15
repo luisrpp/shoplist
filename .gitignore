@@ -8,6 +8,8 @@ Scripts
 *.py~
 *.pyc
 *.html~
+*.css~
+*.js~
 database.db
 .DS_Store
 set_locale.sh
